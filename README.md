@@ -5,7 +5,6 @@ This example shows how you can integrate Snyk IaC CLI into a PR based workflow.
 Upon raising a Pull Request, the following steps will happen:
 
 - Scan all of the configuration files in this repository using the Snyk IaC CLI
-- Upload the results to GitHub Security
 - Add a comment to the Pull Request with the output of the security scan
 - Block the PR Merge if there are open high-severity issues
 - Allow the PR to be merged if there are no open high-severity issues
