@@ -10,22 +10,7 @@ env:
 
 jobs:
   snyk-iac-security:
-    name: Scan & Upload IaC results
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run Snyk IaC
-        continue-on-error: true
-        uses: snyk/actions/iac@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          file: .
-      - uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: snyk.sarif
-  snyk-iac-block:
-    name: Update PR & Block Build
+    name: Run Snyk Infrastructure as Code Security Scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -53,5 +38,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # msg: "We found ${{ env.severity_threshold }} severity or higher issues"
-          msg: "${{ steps.iac.output.OUTPUT"
+          msg: "${{ steps.iac.output.OUTPUT }}"
           check_for_duplicate_msg: false  # OPTIONAL 
