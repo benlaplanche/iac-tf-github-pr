@@ -5,17 +5,29 @@ on:
 
 jobs:
   snyk-iac-security:
-    name: Run Snyk IaC Security Scan
+    name: Scan & Upload IaC results
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run Snyk to check Kubernetes manifest file for issues
+      - name: Run Snyk IaC
         continue-on-error: true
         uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: .
+    name: Update PR & Block Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Snyk IaC
+        continue-on-error: false
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          file: .
+          args: --severity-threshold=high
       - name: comment PR
         uses: unsplash/comment-on-pr@master
         env:
