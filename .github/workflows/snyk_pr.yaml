@@ -16,10 +16,6 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: .
-      - uses: github/codeql-action/upload-sarif@v1
-        if: ${{ success() }}
-        with:
-          sarif_file: snyk.sarif
       - name: comment PR
         uses: unsplash/comment-on-pr@master
         env:
