@@ -16,6 +16,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: .
+  snyk-iac-block:
     name: Update PR & Block Build
     runs-on: ubuntu-latest
     steps:
