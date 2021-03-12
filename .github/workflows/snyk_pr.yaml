@@ -21,9 +21,8 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: ::set-output iac test . --severity-threshold=${{ env.severity_threshold }}
-        #   file: .
-        #   args: --severity-threshold=${{ env.severity_threshold }}
+          file: .
+          args: --severity-threshold=${{ env.severity_threshold }}
 
       - name: PR Comment - Success
         if: ${{ success() }}
