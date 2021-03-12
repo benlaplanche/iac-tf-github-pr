@@ -38,5 +38,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # msg: "We found ${{ env.severity_threshold }} severity or higher issues"
-          msg: "${{ steps.iac.output.OUTPUT }}"
+          msg: "${{ steps.iac.outputs.output }}"
           check_for_duplicate_msg: false  # OPTIONAL 
