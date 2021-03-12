@@ -36,7 +36,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: .
-          args: --severity-threshold="${{ env.severity_threshold }}"
+          args: --severity-threshold=${{ env.severity_threshold }}
       - name: comment PR
         uses: unsplash/comment-on-pr@master
         env:
