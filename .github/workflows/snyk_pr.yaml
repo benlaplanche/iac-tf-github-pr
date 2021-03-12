@@ -30,6 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Snyk IaC
+        id: iac
         continue-on-error: false
         uses: snyk/actions/iac@master
         env:
@@ -46,10 +47,10 @@ jobs:
           msg: "No ${{ env.severity_threshold }} or higher issues were found"
           check_for_duplicate_msg: false  # OPTIONAL 
       - name: PR Comment - Failure
-        if: ${{ success() }}
+        if: ${{ failure() }}
         uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "No ${{ env.severity_threshold }} or higher issues were found"
+          msg: "We found ${{ env.severity_threshold }} or higher issues"
           check_for_duplicate_msg: false  # OPTIONAL 
