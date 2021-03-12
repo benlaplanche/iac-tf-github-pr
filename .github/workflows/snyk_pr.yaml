@@ -21,8 +21,10 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          file: .
-          args: --severity-threshold=${{ env.severity_threshold }}
+          command: ::set-output iac test . --severity-threshold=${{ env.severity_threshold }}
+        #   file: .
+        #   args: --severity-threshold=${{ env.severity_threshold }}
+
       - name: PR Comment - Success
         if: ${{ success() }}
         uses: unsplash/comment-on-pr@master
