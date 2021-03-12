@@ -20,14 +20,13 @@ variable "s3_acl" {
 }
 
 # CHANGE ME - change the name of the bucket to something unique to you
-resource "aws_s3_bucket" "pictures-of-waleeds-hair" {
+resource "aws_s3_bucket" "pictures-of-snyky-dogs" {
   # CHANGE ME - change the name of the bucket to something unique to you
-  bucket = "pictures-of-waleeds-hair"
+  bucket = "pictures-of-snyky-dogs"
   acl    = var.s3_acl
 
   tags = {
-    Name        = "Pictures of Waleeds Hair"
+    Name        = "Pictures of Snyky Dogs"
     Environment = "Production"
-    Hairstyle   = "Extreme"
   }
 }
