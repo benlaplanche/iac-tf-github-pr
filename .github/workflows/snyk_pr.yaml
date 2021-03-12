@@ -5,7 +5,8 @@ on:
 
 env:
   # Set the severity threshold to block the build on
-  severity_threshold: 'medium'
+  # the value can be low | medium | high | critical
+  severity_threshold: medium
 
 jobs:
   snyk-iac-security:
