@@ -12,8 +12,23 @@ Upon raising a Pull Request, the following steps will happen:
 
 ## Setup
 
+### Tokens
+
 Add a secret to your repository called `SNYK_TOKEN` with the value of your Snyk API Token.
 You can find this at https://app.snyk.io in the settings for your user. Or you can use a service token.
+
+### Commit Statuses
+
+If you want to prevent a PR from being merged, if there are failing checks you can use a combination of Branch protection rules and commit status checks.
+
+Go to the settings for you're repository and create a new branch protection rule as follows
+
+- Pattern of `*` which will cause it to apply to any branch
+- Tick `Require status checks to pass before merging`
+- Select `Run Snyk IaC Security Scan` as a status check
+- Save and apply
+
+![branch protection settings](assets/branch_protection.png)
 
 ## How to use
 
