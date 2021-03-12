@@ -3,6 +3,10 @@ name: Snyk Infrastructure as Code Security Scan
 on:
   pull_request:
 
+env:
+  # Set the severity threshold to block the build on
+  severity_threshold: 'medium'
+
 jobs:
   snyk-iac-security:
     name: Scan & Upload IaC results
@@ -31,7 +35,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: .
-          args: --severity-threshold=high
+          args: --severity-threshold="${{ env.severity_threshold }}"
       - name: comment PR
         uses: unsplash/comment-on-pr@master
         env:
