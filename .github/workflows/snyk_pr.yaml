@@ -3,26 +3,41 @@ name: Snyk Infrastructure as Code Security Scan
 on:
   pull_request:
 
+env:
+  # Set the severity threshold to block the build on
+  # the value can be low | medium | high | critical
+  severity_threshold: medium
+
 jobs:
   snyk-iac-security:
-    name: Run Snyk IaC Security Scan
+    name: Run Snyk Infrastructure as Code Security Scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run Snyk to check Kubernetes manifest file for issues
-        continue-on-error: true
+      - name: Run Snyk IaC
+        id: iac
+        continue-on-error: false
         uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           file: .
-      - uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: snyk.sarif
-      - name: comment PR
+          args: --severity-threshold=${{ env.severity_threshold }}
+
+      - name: PR Comment - Success
+        if: ${{ success() }}
         uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "Check out this message!"
+          msg: "No ${{ env.severity_threshold }} or higher issues were found"
+          check_for_duplicate_msg: false  # OPTIONAL 
+      - name: PR Comment - Failure
+        if: ${{ failure() }}
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: "We found ${{ env.severity_threshold }} severity or higher issues"
+          # msg: "${{ steps.iac.outputs.output }}"
           check_for_duplicate_msg: false  # OPTIONAL 
